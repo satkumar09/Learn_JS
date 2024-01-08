@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM learning 4</title>
+</head>
+<body style = "background-color: #212121; color: #fff">
+  <ul class = "language">
+    <li>Javascript</li>
+  </ul>
+</body>
+<script>
+  // add element 
+  // normal way to add an element using function 
+  function addLanguage(langName){
+    const li = document.createElement('li')
+    li.innerHTML = `${langName}`
+    document.querySelector('.language').appendChild(li)
+  }
+  addLanguage("C++")
+  addLanguage("python")
+
+  // optimized way to add an element
+  const addOptiLanguage = (langName) => {
+    const li = document.createElement('li')
+    li.appendChild(document.createTextNode(langName))
+    document.querySelector('.language').appendChild(li)
+  }
+  addOptiLanguage("typescript")
+  addOptiLanguage("Java")
+
+  /*Output on screen at this point:
+  Javascript
+  C++
+  python
+  typescript
+  Java
+  */
+
+  // edit element
+  const thirdLang = document.querySelector("li:nth-child(3)")
+  //console.log(secondLang);       // <li>python</li> this will get replaced later by <li>Mojo</li>
+
+  //secondLang.innerHTML = "Mojo"  // un-optimized way 
+
+  const newli = document.createElement('li') 
+  //console.log(newli);            // <li></li> we now just need to add text in this li tag
+
+  newli.textContent = "Mojo"
+  //console.log(newli);              // <li>Mojo</li>
+  thirdLang.replaceWith(newli) 
+
+  // edit element (different method)
+  const fLang = document.querySelector("li:first-child")
+  fLang.outerHTML = '<li>C</li>'
+
+  // remove element
+  const lastLang = document.querySelector("li:last-child")
+  lastLang.remove()
+
+  /*Output on screen after all those operations:
+  C
+  C++
+  Mojo
+  typescript
+  */
+
+</script>
+</html>

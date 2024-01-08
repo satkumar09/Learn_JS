@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closure aur chai</title>
+</head>
+<body style="background-color: #313131;">
+    <button id="orange">Orange</button>
+    <button id="green">Green</button>
+</body>
+
+    <script>
+
+    // Lexical Scoping:
+
+    // function init() {
+    //     let name = "Mozilla"; 
+    //     function displayName() {
+    //         console.log(name); 
+    //     }
+    //     displayName();
+    // }
+    // init();
+
+    function outer(){
+        let username = "hitesh"
+        console.log("OUTER", secret);  //not available
+        function inner(){
+            let secret = "my123"
+            console.log("inner", username);  //available
+        }
+        function innerTwo(){
+            console.log("innerTwo", username);//available
+            console.log(secret);      //not available
+        }
+        inner()
+        innerTwo()
+
+    }
+    outer()
+    console.log("TOO OUTER", username);//not available
+
+    //basically siblings doesn't share properties between themselves, child doesn't share their properties with parent, only the parent properties are shared to the child 
+
+    //Closer: 
+
+    function makeFunc() {
+        const name = "Mozilla";
+        function displayName() {
+            console.log(name);
+        }
+        return displayName;  //here the whole lexical scope is returned not only the execution context
+    }
+
+    const myFunc = makeFunc(); 
+    myFunc();      // Mozilla
+
+    </script>
+    <script>
+      //Practical example for closer and lexical scope:
+
+        // document.getElementById("orange").onclick = function(){
+        //     document.body.style.backgroundColor = `orange`
+        // }
+        // document.getElementById("green").onclick = function(){
+        //     document.body.style.backgroundColor = `green`
+        // }
+
+        //making a generic function:
+        function clickHandler(color){
+            // document.body.style.backgroundColor = `${color}`  // doesn't work as the below call act as function execution so it will make the background orange or green disable furthur change on button click 
+
+            //to counter this issue we have to return a function:-
+
+            return function(){
+                document.body.style.backgroundColor = `${color}`
+            }
+            //as you can see child function has access of color: lexical scope/closer 
+        }
+
+        document.getElementById('orange').onclick = clickHandler("orange")
+        document.getElementById('green').onclick = clickHandler("green")
+
+    </script>
+</html>
